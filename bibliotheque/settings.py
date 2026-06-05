@@ -13,15 +13,30 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 
+
+def load_env_file(path: Path) -> None:
+    if not path.exists():
+        return
+
+    for raw_line in path.read_text(encoding='utf-8').splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+
+        key, value = line.split('=', 1)
+        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_env_file(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-720_ha0z20yflz6o$r($5j(77pmka-mx601ilw@7mxmb*2bsm@'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-720_ha0z20yflz6o$r($5j(77pmka-mx601ilw@7mxmb*2bsm@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
