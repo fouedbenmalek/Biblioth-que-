@@ -1,0 +1,94 @@
+{% extends 'library/base.html' %} {% block content %}
+
+<div class="page-header">
+  <div class="hero-overline">Assistant intelligent</div>
+  <div class="d-flex flex-column gap-3">
+    <div>
+      <h1 class="fw-bold mb-2">Chatbot IA</h1>
+      <p class="hero-subtitle mb-0">
+        Pose une question sur la bibliothèque et obtiens une réponse basée sur
+        les livres disponibles.
+      </p>
+    </div>
+    <span class="hero-badge"
+      ><i class="bi bi-robot-fill"></i> Toujours prêt à aider</span
+    >
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <div class="card p-4">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="question" class="form-label fw-bold">Ta question</label>
+          <textarea
+            id="question"
+            name="question"
+            rows="5"
+            class="form-control"
+            placeholder="Ex : Le livre Les Misérables est-il disponible ?"
+          >
+{{ question }}</textarea
+          >
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg px-5">
+          <i class="bi bi-send-fill me-2"></i>Envoyer
+        </button>
+      </form>
+    </div>
+
+    {% if response %}
+    <div class="card p-4 mt-4">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+          <h5 class="mb-1">Réponse du chatbot</h5>
+          <p class="text-muted mb-0">
+            Réponse basée sur la bibliothèque et l'IA.
+          </p>
+        </div>
+        <span class="badge badge-soft">IA + données réelles</span>
+      </div>
+      <div class="rounded-4 p-4" style="background: rgba(67, 56, 202, 0.05)">
+        <p class="mb-0">{{ response }}</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h5 class="fw-bold">Exemples de questions</h5>
+      <p class="text-muted">Demande au chatbot en langage naturel.</p>
+      <ul class="list-group list-group-flush mt-3">
+        <li class="list-group-item">
+          Est-ce que le livre avec l'ID 3 existe ?
+        </li>
+        <li class="list-group-item">
+          Le roman Les Misérables est-il disponible ?
+        </li>
+        <li class="list-group-item">
+          Je veux un roman romantique facile à lire.
+        </li>
+        <li class="list-group-item">Je cherche un livre de Victor Hugo.</li>
+      </ul>
+    </div>
+
+    <div class="card p-4 mt-4">
+      <h5 class="fw-bold">Conseils</h5>
+      <p class="text-muted mb-3">
+        Le chatbot utilise les données de la base de livres. Tu peux poser des
+        questions sur :
+      </p>
+      <ul class="list-unstyled text-muted">
+        <li>• disponibilité</li>
+        <li>• auteur</li>
+        <li>• catégorie</li>
+        <li>• existence d'un livre par ID</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

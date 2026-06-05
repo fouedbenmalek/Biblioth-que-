@@ -1,0 +1,59 @@
+{% extends 'library/base.html' %} {% block content %}
+
+<div class="page-header mb-4">
+  <div class="hero-overline">Gestion des catégories</div>
+  <h1 class="fw-bold">Catégories de livres</h1>
+  <p class="text-muted">
+    Ajoutez et gérez les catégories de votre bibliothèque.
+  </p>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-5">
+    <div class="card shadow-sm rounded-4 p-4 h-100">
+      <h5 class="mb-4">Ajouter une catégorie</h5>
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Nom de la catégorie</label>
+          {{ form.nom }}
+        </div>
+        <button type="submit" class="btn btn-primary">
+          Ajouter la catégorie
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card shadow-sm rounded-4 p-4 h-100">
+      <h5 class="mb-4">Catégories existantes</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for categorie in categories %}
+            <tr>
+              <td>{{ categorie.id }}</td>
+              <td>{{ categorie.nom }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="2" class="text-center py-4">
+                <span class="text-muted">Aucune catégorie enregistrée.</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

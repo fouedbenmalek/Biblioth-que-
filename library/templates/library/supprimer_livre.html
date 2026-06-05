@@ -1,0 +1,15 @@
+{% extends 'library/base.html' %} {% block content %}
+
+<h3>Confirmer la suppression ?</h3>
+
+<p>{{ livre.titre }}</p>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <button class="btn btn-danger">Supprimer</button>
+
+  <a href="{% url 'liste_livres' %}" class="btn btn-secondary"> Annuler </a>
+</form>
+
+{% endblock %}

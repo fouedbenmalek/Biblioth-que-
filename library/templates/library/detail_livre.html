@@ -1,0 +1,68 @@
+{% extends 'library/base.html' %} {% block content %}
+
+<div class="page-header mb-4">
+  <div class="hero-overline">Fiche livre</div>
+  <div
+    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3"
+  >
+    <div>
+      <h1 class="fw-bold mb-1">{{ livre.titre }}</h1>
+      <p class="text-muted mb-0">{{ livre.auteur }}</p>
+    </div>
+    <a href="{% url 'liste_livres' %}" class="btn btn-outline-secondary"
+      >← Retour à la liste</a
+    >
+  </div>
+</div>
+
+<div class="card shadow-sm rounded-4">
+  <div class="card-body">
+    <div class="row gy-4">
+      <div class="col-md-6">
+        <div class="border rounded-4 p-4 h-100">
+          <h5 class="mb-3">Détails</h5>
+          <p class="mb-2"><strong>Catégorie :</strong> {{ livre.categorie }}</p>
+          <p class="mb-2">
+            <strong>Année :</strong> {{ livre.annee_publication }}
+          </p>
+          <p class="mb-0">
+            <strong>Quantité disponible :</strong>
+            <span class="badge bg-info text-dark"
+              >{{ livre.quantite_disponible }}</span
+            >
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded-4 p-4 h-100">
+          <h5 class="mb-3">Statut</h5>
+          {% if livre.statut == 'disponible' %}
+          <span class="badge bg-success fs-6">Disponible</span>
+          {% elif livre.statut == 'emprunte' %}
+          <span class="badge bg-warning text-dark fs-6">Emprunté</span>
+          {% else %}
+          <span class="badge bg-danger fs-6">Réservé</span>
+          {% endif %}
+          <p class="mt-3 text-muted">
+            Utilisez les actions ci-dessous pour modifier ou mettre à jour ce
+            livre.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex flex-wrap gap-2">
+      <a href="{% url 'modifier_livre' livre.id %}" class="btn btn-warning"
+        >Modifier</a
+      >
+      <a href="{% url 'supprimer_livre' livre.id %}" class="btn btn-danger"
+        >Supprimer</a
+      >
+      <a href="{% url 'liste_livres' %}" class="btn btn-outline-secondary"
+        >Retour</a
+      >
+    </div>
+  </div>
+</div>
+
+{% endblock %}
